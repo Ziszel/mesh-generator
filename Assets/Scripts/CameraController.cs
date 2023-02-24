@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -8,12 +7,14 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        // Lock the cursor. Makes an application with mouse movement usable.
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // store the input of 'W,A,S,D' / arrow keys to calculate movement in this frame
         float hMovement = Input.GetAxisRaw("Horizontal") * movementSpeed;
         float vMovement = Input.GetAxisRaw("Vertical") * movementSpeed;
         MoveCamera(hMovement, vMovement);
@@ -22,11 +23,14 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera(float hMov, float vMov)
     {
+        // Move the camera with a simple Translate (called in Update, no physics, use Time.deltaTime)
         transform.Translate(hMov * Time.deltaTime, 0.0f, vMov * Time.deltaTime, Space.Self);
     }
 
     private void RotateCamera()
     {
+        // update the angle of the camera by mouse movement + the set rotation speed
+        // Add to the current angle so the camera is updated from its current position
         transform.eulerAngles += rotationSpeed * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0.0f);
     }
 }
