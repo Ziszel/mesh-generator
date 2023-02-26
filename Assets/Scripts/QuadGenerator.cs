@@ -10,22 +10,11 @@ using UnityEngine;
 /// </summary>
 public class QuadGenerator : MonoBehaviour
 {
-    [SerializeField] private int width;
-    [SerializeField] private int height;
+    //[SerializeField] private int width;
+    //[SerializeField] private int height;
     private Mesh _mesh;
-    // Start is called before the first frame update
-    void Start()
-    {
-        GenerateQuad();
-    }
 
-    private void GenerateQuadGrid()
-    {
-        GetComponent<MeshFilter>().mesh = _mesh = new Mesh();
-        
-    }
-
-    private void GenerateQuad()
+    public void GenerateQuad(int width, int height)
     {
         GetComponent<MeshFilter>().mesh = _mesh = new Mesh();
         // Vertices
@@ -55,9 +44,9 @@ public class QuadGenerator : MonoBehaviour
         Vector3[] normals = new Vector3[4];
         for (int i = 0; i < normals.Length; ++i)
         {
-            // the normals are set to the positive Z axis because the triangles are set counterclockwise
+            // the normals are set to the negative Z axis because the triangles are set clockwise
             // the camera will be in the negative Z axis but look toward the quad in the positive
-            normals[i] = Vector3.forward;
+            normals[i] = -Vector3.forward;
         }
         
         // UVs
@@ -71,6 +60,7 @@ public class QuadGenerator : MonoBehaviour
         };
         
         // Assign the vertices, triangles, normals, and uvs to the mesh component
+        _mesh.Clear();
         _mesh.vertices = vertices;
         _mesh.triangles = triangles;
         _mesh.normals = normals;

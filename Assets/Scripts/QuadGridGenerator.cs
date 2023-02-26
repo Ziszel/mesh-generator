@@ -10,8 +10,6 @@ using UnityEngine;
 /// </summary>
 public class QuadGridGenerator : MonoBehaviour
 {
-    [SerializeField] private int xSize;
-    [SerializeField] private int zSize;
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
@@ -22,10 +20,10 @@ public class QuadGridGenerator : MonoBehaviour
         // value returns a value between 0.0 and 1.0 inclusive, thus better for me than Random.Range();
         //_Modifer = Random.value;
         GetComponent<MeshFilter>().mesh = _mesh = new Mesh();   
-        GenerateQuadGrid();
+        //GenerateQuadGrid();
     }
 
-    private void GenerateQuadGrid()
+    public void GenerateQuadGrid(int xSize, int ySize)
     {
         
         // Vertices
@@ -34,16 +32,16 @@ public class QuadGridGenerator : MonoBehaviour
         // to Mesh.vertices or Mesh.normals), rather than access the property array via individual elements.
         // https://docs.unity3d.com/Manual/Example-CreatingaBillboardPlane.html
         // Set the array = to the size of the width and height of the terrain
-        _vertices = new Vector3[(xSize + 1) * (zSize + 1)];
+        _vertices = new Vector3[(xSize + 1) * (ySize + 1)];
         
         // Triangles
         // the number of triangles of a grid is ALWAYS:
         // the (number of vertices - 1) squared * 2 (each quad is two triangles) * 3 (each triangle is 3 vertices)
-        _triangles = new int[(xSize - 1) * (zSize - 1) * 6]; // * 2 * 3 is equal to * 6
+        _triangles = new int[(xSize - 1) * (ySize - 1) * 6]; // * 2 * 3 is equal to * 6
         int triangleIndex = 0;
         // loop over the array of vertices, setting the position of each vertex AND the triangles relating to it
         // https://catlikecoding.com/unity/tutorials/procedural-grid/
-        for (int y = 0, i = 0; y < zSize; ++y)
+        for (int y = 0, i = 0; y < ySize; ++y)
         {
             for (int x = 0; x < xSize; ++x)
             {
@@ -52,7 +50,7 @@ public class QuadGridGenerator : MonoBehaviour
 
                 // to calculate triangles in a grid, clockwise
                 // i, i+xSize. i+1, i+1, i+xSize, i+size+1
-                if (x != xSize - 1 && y != zSize - 1) // if x and y are not at the bounds of the grid
+                if (x != xSize - 1 && y != ySize - 1) // if x and y are not at the bounds of the grid
                 {
                     // Triangles (must be set clockwise)
                     // Triangles make up 3D meshes. They are defined by specifying the indices of three vertices.

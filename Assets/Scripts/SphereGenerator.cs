@@ -3,10 +3,6 @@ using UnityEngine;
 /// This script was created using the following resource: https://www.youtube.com/watch?v=QN39W020LqU
 public class SphereGenerator : MonoBehaviour
 {
-    // the min and max resolution the sphere can have
-    [Range(2, 255)]
-    public int size = 10;
-    
     [SerializeField, HideInInspector]
     private MeshFilter[] meshFilters;
     private readonly int _meshCount = 6; // this will ALWAYS be 6
@@ -22,14 +18,7 @@ public class SphereGenerator : MonoBehaviour
         Vector3.back
     };
 
-    // this will eventually be called from a GameManager object which will handle the switching between different
-    // meshes
-    private void Start()
-    {
-        Initialise();
-    }
-
-    private void Initialise()
+    public void Initialise(int size)
     {
         // don't create a new MeshFilter if one already exists
         if (meshFilters == null || meshFilters.Length == 0)
@@ -52,11 +41,11 @@ public class SphereGenerator : MonoBehaviour
             // add a new face to the face array, passing down size and direction
             // localUp will be set to the direction and allow the code in TerrainFace to construct a mesh from the 
             // appropriate angle
-            _meshes[i] = ConstructMesh(_directions[i], meshFilters[i].sharedMesh);
+            _meshes[i] = ConstructMesh(_directions[i], meshFilters[i].sharedMesh, size);
         }
     }
 
-    private Mesh ConstructMesh(Vector3 direction, Mesh mesh)
+    private Mesh ConstructMesh(Vector3 direction, Mesh mesh, int size)
     {
         // axis A represents localUp, but with each value shifted to the left. Therefore it can be seen as a complimentary vector axis
         Vector3 axisA = new Vector3(direction.y, direction.z, direction.x);

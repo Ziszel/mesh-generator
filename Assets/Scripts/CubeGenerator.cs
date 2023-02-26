@@ -11,20 +11,20 @@ using UnityEngine;
 /// </summary>
 public class CubeGenerator : MonoBehaviour
 {
-    public float width = 1.0f;
-    public float height = 1.0f;
-    public float depth = 1.0f;
+    //public float width = 1.0f;
+    //public float height = 1.0f;
+    //public float depth = 1.0f;
     private Mesh _mesh;
     void Start()
     {
-        GetComponent<MeshFilter>().mesh = _mesh = new Mesh();
-        GenerateCube();
+        //GenerateCube();
         // Does not produce desired results
         //SubdivideMesh();
     }
 
-    private void GenerateCube()
+    public void GenerateCube(int width, int height, int depth)
     {
+        GetComponent<MeshFilter>().mesh = _mesh = new Mesh();
         // Vertices
         // There are 8 vertices represented by Vector3 objects.
         // https://docs.unity3d.com/Manual/Example-CreatingaBillboardPlane.html
@@ -103,6 +103,7 @@ public class CubeGenerator : MonoBehaviour
         };
 
         // Assign the vertices, triangles, normals, and uvs to the mesh component
+        _mesh.Clear();
         _mesh.vertices = vertices;
         _mesh.triangles = triangles;
         _mesh.normals = normals;
@@ -110,7 +111,7 @@ public class CubeGenerator : MonoBehaviour
     }
 
     // Use Catmull-Clark subdivision to subdivide a polygonal mesh
-    private void SubdivideMesh()
+    private void SubdivideMesh(float height, float width)
     {
         // Add face point for each face -> set it to be the average of all original points
         // https://forum.unity.com/threads/determining-average-of-a-vector3-array.458195/

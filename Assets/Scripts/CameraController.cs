@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         // Lock the cursor. Makes an application with mouse movement usable.
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -23,14 +23,34 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera(float hMov, float vMov)
     {
+        float heightModifier = 0.0f;
+        if (Input.GetKey(KeyCode.Z))
+        {
+            heightModifier = movementSpeed;
+        }
+
+        if (Input.GetKey(KeyCode.X))
+        {
+            heightModifier = -movementSpeed;
+        }
+        
         // Move the camera with a simple Translate (called in Update, no physics, use Time.deltaTime)
-        transform.Translate(hMov * Time.deltaTime, 0.0f, vMov * Time.deltaTime, Space.Self);
+        transform.Translate(hMov * Time.deltaTime, heightModifier * Time.deltaTime, vMov * Time.deltaTime, Space.Self);
     }
 
     private void RotateCamera()
     {
         // update the angle of the camera by mouse movement + the set rotation speed
         // Add to the current angle so the camera is updated from its current position
-        transform.eulerAngles += rotationSpeed * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0.0f);
+        if (Input.GetKey(KeyCode.Q))
+        {
+            transform.eulerAngles += new Vector3(0.0f, -rotationSpeed * Time.deltaTime, 0.0f);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.eulerAngles += new Vector3(0.0f, rotationSpeed * Time.deltaTime, 0.0f);
+        }
+        
+        //transform.eulerAngles += rotationSpeed * new Vector3(-Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"), 0.0f);
     }
 }
