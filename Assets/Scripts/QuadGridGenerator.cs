@@ -5,8 +5,6 @@ using UnityEngine;
 /// - vertices
 /// - triangles
 /// - normals
-/// Size of the grid can be updated by manipulating xSize, zSide
-/// Shape of the grid can be changed by manipulating min and max height
 /// </summary>
 public class QuadGridGenerator : MonoBehaviour
 {
@@ -16,11 +14,7 @@ public class QuadGridGenerator : MonoBehaviour
 
     void Start()
     {
-        //https://docs.unity3d.com/ScriptReference/Random-value.html
-        // value returns a value between 0.0 and 1.0 inclusive, thus better for me than Random.Range();
-        //_Modifer = Random.value;
         GetComponent<MeshFilter>().mesh = _mesh = new Mesh();   
-        //GenerateQuadGrid();
     }
 
     public void GenerateQuadGrid(int xSize, int ySize)
