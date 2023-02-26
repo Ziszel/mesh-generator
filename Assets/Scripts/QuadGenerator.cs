@@ -6,12 +6,9 @@ using UnityEngine;
 /// - triangles
 /// - normals
 /// - UVs
-/// Size of the quad can be updated by manipulating width and height
 /// </summary>
 public class QuadGenerator : MonoBehaviour
 {
-    //[SerializeField] private int width;
-    //[SerializeField] private int height;
     private Mesh _mesh;
 
     public void GenerateQuad(int width, int height)
