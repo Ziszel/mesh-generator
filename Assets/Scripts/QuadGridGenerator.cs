@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// This script generates a grid mesh, and manipulates the Y value to create hills.
+/// This script generates a grid mesh
 /// - vertices
 /// - triangles
 /// - normals
